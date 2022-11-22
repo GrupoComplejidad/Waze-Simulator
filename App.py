@@ -7,9 +7,10 @@ from tkintermapview import TkinterMapView
 from main import *
 
 class App(tkinter.Tk):
+    
 
     APP_NAME = "Waze Simulator.py"
-    WIDTH = 800
+    WIDTH = 600
     HEIGHT = 600
     
 
@@ -44,9 +45,6 @@ class App(tkinter.Tk):
         self.search_bar_button = tkinter.Button(master=self, width=8, text="Search", command=self.search)
         self.search_bar_button.grid(row=0, column=2, pady=10, padx=10)
 
-        self.search_bar_clear = tkinter.Button(master=self, width=8, text="Clear", command=self.clear)
-        self.search_bar_clear.grid(row=0, column=3, pady=10, padx=10)
-
         self.map_widget = TkinterMapView(width=self.WIDTH, height=600, corner_radius=0)
         self.map_widget.grid(row=1, column=0, columnspan=4, sticky="nsew")
 
@@ -59,18 +57,18 @@ class App(tkinter.Tk):
         self.listbox_button_frame.grid_columnconfigure(0, weight=1)
 
         self.addtrafic_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="add trafic",
-                                                 command=self.addtrafic)
+                                                 command=self.addtrafic )
         self.addtrafic_button.grid(row=0, column=0, pady=10, padx=10)
-
-        self.clear_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="clear path",
-                                                  command=self.clear_marker_list)
-        self.clear_marker_button.grid(row=1, column=0, pady=10, padx=10)
 
         self.connect_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="connect path",
                                                     command=self.connect_marker)
-        self.connect_marker_button.grid(row=2, column=0, pady=10, padx=10)
+        self.connect_marker_button.grid(row=1, column=0, pady=10, padx=10)
 
-        ##DEFINOS QUE SIEMPRE MUESTRE EL AREA DE LIMA
+        self.clear_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="clear path",
+                                                  command=self.clear_marker_list)
+        self.clear_marker_button.grid(row=2, column=0, pady=10, padx=10)
+
+        #Definimos que zona se mostrara al iniciar junto a que zoom se mostrara
         self.map_widget.set_address("LIMA")
         self.map_widget.set_zoom(15)
 
@@ -82,12 +80,11 @@ class App(tkinter.Tk):
 
         self.graph=Init()
 
-        ##ESTO ES LO Q DIBUJA LOS MARCADORES
+        #Dibuja los marcadores con los valores del dataset
         for e in self.graph.edges():
             marker=self.map_widget.set_marker(float(self.graph[e[0]][e[1]]['Latitud_Origen_Interseccion']), float(self.graph[e[0]][e[1]]['Longitud_Origen_Interseccion']), text=str(self.graph[e[0]][e[1]]['ID_Origen_intereccion']) )
             self.marker_lista.append(marker)
             self.graph[e[0]][e[1]]['Costo2']=self.graph[e[0]][e[1]]['distancia_Km']
-            ##print(type(marker.position[0]))
 
 
     def search(self, event=None):
@@ -103,11 +100,10 @@ class App(tkinter.Tk):
                     self.marker_list.append(marker)
                     self.marker_list_box.insert(tkinter.END, f" {marker.position}. {marker.text} ")
 
-                ##print(type(marker.position[0]))
-        
-        
+
+
     def addtrafic(self):
-        update_weights_egde(self.graph)
+        update_Weights_egde(self.graph)
         self.marker_list_box.insert(tkinter.END,"Se agrego el factor de trafico")
 
     def clear_marker_list(self):
@@ -130,16 +126,6 @@ class App(tkinter.Tk):
         if len(position_list) > 0:
             self.marker_path = self.map_widget.set_path(position_list)
 
-    def clear(self):
-        self.input_node_origin.delete(0, last=tkinter.END)
-        self.input_node_destine.delete(0, last=tkinter.END)
-        self.map_widget.delete(self.input_node_destine)
-        self.map_widget.delete(self.input_node_origin)
-        clear_weights(self.graph)
-
-
-        #for e in Init().edges():
-        #    marker=self.map_widget.set_marker(float(Init()[e[0]][e[1]]['Latitud_Origen_Interseccion']), float(Init()[e[0]][e[1]]['Longitud_Origen_Interseccion']), text=str(Init()[e[0]][e[1]]['ID_Origen_intereccion']) )
 
     def on_closing(self, event=0):
         self.destroy()
