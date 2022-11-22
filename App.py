@@ -14,6 +14,8 @@ class App(tkinter.Tk):
     
 
 
+
+
     def __init__(self, *args, **kwargs):
         tkinter.Tk.__init__(self, *args, **kwargs)
 
@@ -107,6 +109,7 @@ class App(tkinter.Tk):
         self.marker_list_box.insert(tkinter.END,"Se agrego el factor de trafico")
 
 
+
     def search(self, event=None):
 
         print(self.input_node_destine.get(), self.input_node_origin.get())
@@ -121,6 +124,25 @@ class App(tkinter.Tk):
                     self.marker_list_box.insert(tkinter.END, f" {marker.position}. {marker.text} ")
 
                 ##print(type(marker.position[0]))
+                
+     def clear(self):
+        self.input_node_origin.delete(0, last=tkinter.END)
+        self.input_node_destine.delete(0, last=tkinter.END)
+        self.map_widget.delete(self.input_node_destine)
+        self.map_widget.delete(self.input_node_origin)
+        clear_weights(self.graph)
+
+
+        #for e in Init().edges():
+        #    marker=self.map_widget.set_marker(float(Init()[e[0]][e[1]]['Latitud_Origen_Interseccion']), float(Init()[e[0]][e[1]]['Longitud_Origen_Interseccion']), text=str(Init()[e[0]][e[1]]['ID_Origen_intereccion']) )
+
+    
+    def on_closing(self, event=0):
+        self.destroy()
+        exit()
+
+    def start(self):
+        self.mainloop()
 
     if __name__ == "__main__":
     app = App()
