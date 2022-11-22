@@ -12,7 +12,13 @@ class App(tkinter.Tk):
     WIDTH = 800
     HEIGHT = 800
 
-
+    def clear_marker_list(self):
+        for marker in self.marker_list:
+            self.map_widget.delete(marker)
+        
+        self.marker_list_box.insert(tkinter.END,"Se elimino el camino")
+        self.marker_list.clear()
+        self.connect_marker()
 
     if __name__ == "__main__":
     app = App()
