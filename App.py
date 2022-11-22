@@ -13,7 +13,17 @@ class App(tkinter.Tk):
     HEIGHT = 800
     
 
+    def connect_marker(self):
+        position_list = []
 
+        for marker in self.marker_list:
+            position_list.append(marker.position)
+
+        if self.marker_path is not None:
+            self.map_widget.delete(self.marker_path)
+
+        if len(position_list) > 0:
+            self.marker_path = self.map_widget.set_path(position_list)
 
 
     def __init__(self, *args, **kwargs):
