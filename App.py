@@ -13,8 +13,10 @@ class App(tkinter.Tk):
     HEIGHT = 800
     
 
+
     def __init__(self, *args, **kwargs):
         tkinter.Tk.__init__(self, *args, **kwargs)
+
 
 
         self.title(self.APP_NAME)
@@ -89,6 +91,15 @@ class App(tkinter.Tk):
             self.graph[e[0]][e[1]]['Costo2']=self.graph[e[0]][e[1]]['distancia_Km']
             ##print(type(marker.position[0]))
             
+
+    def clear_marker_list(self):
+        for marker in self.marker_list:
+            self.map_widget.delete(marker)
+        
+        self.marker_list_box.insert(tkinter.END,"Se elimino el camino")
+        self.marker_list.clear()
+        self.connect_marker()
+
 
     
     def addtrafic(self):
