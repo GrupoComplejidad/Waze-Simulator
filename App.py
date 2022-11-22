@@ -10,26 +10,12 @@ class App(tkinter.Tk):
 
     APP_NAME = "Waze Simulator.py"
     WIDTH = 800
-    HEIGHT = 800
+    HEIGHT = 600
     
-
-    def connect_marker(self):
-        position_list = []
-
-        for marker in self.marker_list:
-            position_list.append(marker.position)
-
-        if self.marker_path is not None:
-            self.map_widget.delete(self.marker_path)
-
-        if len(position_list) > 0:
-            self.marker_path = self.map_widget.set_path(position_list)
 
 
     def __init__(self, *args, **kwargs):
         tkinter.Tk.__init__(self, *args, **kwargs)
-
-
 
         self.title(self.APP_NAME)
         self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
@@ -102,22 +88,6 @@ class App(tkinter.Tk):
             self.marker_lista.append(marker)
             self.graph[e[0]][e[1]]['Costo2']=self.graph[e[0]][e[1]]['distancia_Km']
             ##print(type(marker.position[0]))
-            
-
-    def clear_marker_list(self):
-        for marker in self.marker_list:
-            self.map_widget.delete(marker)
-        
-        self.marker_list_box.insert(tkinter.END,"Se elimino el camino")
-        self.marker_list.clear()
-        self.connect_marker()
-
-
-    
-    def addtrafic(self):
-        update_weights_egde(self.graph)
-        self.marker_list_box.insert(tkinter.END,"Se agrego el factor de trafico")
-
 
 
     def search(self, event=None):
@@ -134,8 +104,33 @@ class App(tkinter.Tk):
                     self.marker_list_box.insert(tkinter.END, f" {marker.position}. {marker.text} ")
 
                 ##print(type(marker.position[0]))
-                
-     def clear(self):
+        
+        
+    def addtrafic(self):
+        update_weights_egde(self.graph)
+        self.marker_list_box.insert(tkinter.END,"Se agrego el factor de trafico")
+
+    def clear_marker_list(self):
+        for marker in self.marker_list:
+            self.map_widget.delete(marker)
+        
+        self.marker_list_box.insert(tkinter.END,"Se elimino el camino")
+        self.marker_list.clear()
+        self.connect_marker()
+
+    def connect_marker(self):
+        position_list = []
+
+        for marker in self.marker_list:
+            position_list.append(marker.position)
+
+        if self.marker_path is not None:
+            self.map_widget.delete(self.marker_path)
+
+        if len(position_list) > 0:
+            self.marker_path = self.map_widget.set_path(position_list)
+
+    def clear(self):
         self.input_node_origin.delete(0, last=tkinter.END)
         self.input_node_destine.delete(0, last=tkinter.END)
         self.map_widget.delete(self.input_node_destine)
@@ -146,7 +141,6 @@ class App(tkinter.Tk):
         #for e in Init().edges():
         #    marker=self.map_widget.set_marker(float(Init()[e[0]][e[1]]['Latitud_Origen_Interseccion']), float(Init()[e[0]][e[1]]['Longitud_Origen_Interseccion']), text=str(Init()[e[0]][e[1]]['ID_Origen_intereccion']) )
 
-    
     def on_closing(self, event=0):
         self.destroy()
         exit()
@@ -154,6 +148,7 @@ class App(tkinter.Tk):
     def start(self):
         self.mainloop()
 
-    if __name__ == "__main__":
+
+if __name__ == "__main__":
     app = App()
     app.start()

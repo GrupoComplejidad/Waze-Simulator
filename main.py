@@ -9,7 +9,7 @@ import random
 def Init():
     #leemos el dataset
     #Solamente para prueba indicamos el numero de filas q leera
-    df=pd.read_csv('Lima-intersecciones_v2.csv', sep=",",encoding = "ISO-8859-1", nrows=1000)
+    df=pd.read_csv('Intersecciones.csv', sep=",",encoding = "ISO-8859-1", nrows=1500)
     #Creamos el grafo
     GRAPH = nx.from_pandas_edgelist(df,source='ID_Origen_intereccion',target='ID_Final_Interseccion',edge_attr=['distancia_Km','ID_Final_Interseccion', 'ID_Origen_intereccion','Nombre_Calle','Costo2', 'Latitud_Origen_Interseccion','Longitud_Origen_Interseccion','Latitud_Destino_Interseccion','Longitud_Destino_Interseccion'])
     return GRAPH
