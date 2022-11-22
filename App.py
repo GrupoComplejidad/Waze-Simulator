@@ -89,12 +89,12 @@ class App(tkinter.Tk):
             self.graph[e[0]][e[1]]['Costo2']=self.graph[e[0]][e[1]]['distancia_Km']
             ##print(type(marker.position[0]))
             
- <<<<<<< feature/addtrafic
+
     
     def addtrafic(self):
         update_weights_egde(self.graph)
         self.marker_list_box.insert(tkinter.END,"Se agrego el factor de trafico")
-=======
+
 
     def search(self, event=None):
 
