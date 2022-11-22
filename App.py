@@ -12,8 +12,10 @@ class App(tkinter.Tk):
     WIDTH = 800
     HEIGHT = 800
     
+
     def __init__(self, *args, **kwargs):
         tkinter.Tk.__init__(self, *args, **kwargs)
+
 
         self.title(self.APP_NAME)
         self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
@@ -86,6 +88,13 @@ class App(tkinter.Tk):
             self.marker_lista.append(marker)
             self.graph[e[0]][e[1]]['Costo2']=self.graph[e[0]][e[1]]['distancia_Km']
             ##print(type(marker.position[0]))
+            
+ <<<<<<< feature/addtrafic
+    
+    def addtrafic(self):
+        update_weights_egde(self.graph)
+        self.marker_list_box.insert(tkinter.END,"Se agrego el factor de trafico")
+=======
 
     def search(self, event=None):
 
